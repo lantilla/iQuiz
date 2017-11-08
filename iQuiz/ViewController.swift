@@ -35,7 +35,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         // adding description as subtitle to cell
         let desc = (UIApplication.shared.delegate as! AppDelegate).subjectsInfo[subject]!["desc"]
         cell?.detailTextLabel?.text = desc
-        cell?.detailTextLabel?.numberOfLines = 0;
+        // cell?.detailTextLabel?.numberOfLines = 0; meant to wrap description text 
         return cell!
     }
 
