@@ -13,7 +13,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
 
-
+    let subjects = ["Mathematics", "Marvel Super Heroes", "Science"]
+    let subjectsInfo = ["Mathematics": ["image": "calculator", "desc": "Get out that calculator!"], "Marvel Super Heroes": ["image": "marvel", "desc": "How well do you know the Marvel universe?"], "Science": ["image": "science", "desc": "Physics...Chemistry...Biology...let's see what you get!"]]
+    
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
         return true
