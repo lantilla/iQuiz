@@ -18,6 +18,7 @@ class QuestionViewController: UIViewController {
     @IBOutlet weak var option2Btn: UIButton!
     @IBOutlet weak var option3Btn: UIButton!
     @IBOutlet weak var option4Btn: UIButton!
+    var formerBtn = UIButton()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -71,8 +72,12 @@ class QuestionViewController: UIViewController {
         option4Btn.setTitle(questions[currentQuestion]["option4"], for: .normal)
     }
     
+    
     @IBAction func optionPressed(_ sender: UIButton) {
         chosenAns = sender.titleLabel!.text!
+        formerBtn.backgroundColor = .gray
+        sender.backgroundColor = UIColor(hue: 0.6472, saturation: 0.08, brightness: 0.15, alpha: 1.0)
+        formerBtn = sender
         NSLog(chosenAns)
     }
     
