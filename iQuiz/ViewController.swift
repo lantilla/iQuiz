@@ -9,7 +9,9 @@
 import UIKit
 
 class ViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
-    
+    var questions: [Dictionary<String, String>] = [[:]]
+    var correct = 0
+    var currentQuestion = 0
     @IBOutlet weak var tableView: UITableView!
     
     public func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -31,18 +33,42 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         // adding image icon to cell
         let img = (UIApplication.shared.delegate as! AppDelegate).subjectsInfo[subject]!["image"]
         cell?.imageView?.image = UIImage(named: img!)
-        
         // adding description as subtitle to cell
         let desc = (UIApplication.shared.delegate as! AppDelegate).subjectsInfo[subject]!["desc"]
         cell?.detailTextLabel?.text = desc
-        // cell?.detailTextLabel?.numberOfLines = 0; meant to wrap description text 
+        //cell?.detailTextLabel?.numberOfLines = 0; // meant to wrap description text
+        NSLog(subject)
         return cell!
     }
-
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let subject = (UIApplication.shared.delegate as! AppDelegate).subjects[indexPath.row]
+        NSLog("You selected cell number: \(subject)!")
+        if subject == "Mathematics" {
+            questions = (UIApplication.shared.delegate as! AppDelegate).mathematics
+        } else if subject == "Science" {
+            questions = (UIApplication.shared.delegate as! AppDelegate).science
+        } else {
+            questions = (UIApplication.shared.delegate as! AppDelegate).marvel
+        }
+        self.performSegue(withIdentifier: "questionSegue", sender: self)
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        let destVC : QuestionViewController = segue.destination as! QuestionViewController
+        destVC.correctCount = correct
+        destVC.questions = questions
+    }
+    
+    @IBAction func returnToMain(segue: UIStoryboardSegue) {
+        NSLog("back in the ViewController")
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
         tableView.dataSource = self
+        tableView.delegate = self
         self.tableView.register(UITableViewCell.self, forCellReuseIdentifier: "subjectCell")
     }
 
@@ -51,6 +77,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         // Dispose of any resources that can be recreated.
     }
 
+    
     @IBAction func settingsPressed(_ sender: Any) {
         let alert = UIAlertController(title: "Settings", message: "Settings go here", preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "OK", style: .default) { _ in

@@ -1,0 +1,81 @@
+//
+//  AnswerViewController.swift
+//  iQuiz
+//
+//  Created by Lauren Antilla on 11/13/17.
+//  Copyright © 2017 Lauren Antilla. All rights reserved.
+//
+
+import UIKit
+
+class AnswerViewController: UIViewController {
+    var questions: [Dictionary<String, String>] = [[:]]
+    var correctCount = Int()
+    var chosenAns = String()
+    var currentQuestion = Int()
+    @IBOutlet weak var questionLabel: UILabel!
+    @IBOutlet weak var answerLabel: UILabel!
+    @IBOutlet weak var userAnswerLabel: UILabel!
+    
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        questionLabel.text = questions[currentQuestion]["question"]
+        answerLabel.text = questions[currentQuestion]["answer"]
+        userAnswerLabel.text = chosenAns
+        if chosenAns == answerLabel.text {
+            userAnswerLabel.textColor = UIColor(hue: 0.3778, saturation: 1, brightness: 0.62, alpha: 1.0)
+            correctCount += 1
+        } else {
+            userAnswerLabel.textColor = UIColor.red
+        }
+        
+        // Do any additional setup after loading the view.
+    }
+
+    override func didReceiveMemoryWarning() {
+        super.didReceiveMemoryWarning()
+        // Dispose of any resources that can be recreated.
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "finishedSegue" {
+            let destVC : FinishedViewController = segue.destination as! FinishedViewController
+            destVC.correctCount = correctCount
+            destVC.total = questions.count
+        } else if segue.identifier == "nextQuestionSegue" {
+            let destVC : QuestionViewController = segue.destination as! QuestionViewController
+            destVC.currentQuestion = currentQuestion
+            destVC.correctCount = correctCount
+        }
+    }
+    
+    
+    @IBAction func settingsPressed(_ sender: Any) {
+        let alert = UIAlertController(title: "Settings", message: "Settings go here", preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "OK", style: .default) { _ in
+            alert.dismiss(animated: true)
+        })
+        self.present(alert, animated: true)
+    }
+    
+    @IBAction func nextBtnPressed(_ sender: Any) {
+        currentQuestion += 1
+        if questions.count != currentQuestion {
+            self.performSegue(withIdentifier: "nextQuestionSegue", sender: self)
+        } else {
+            self.performSegue(withIdentifier: "finishedSegue", sender: self)
+        }
+    }
+    
+    /*
+    // MARK: - Navigation
+
+    // In a storyboard-based application, you will often want to do a little preparation before navigation
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        // Get the new view controller using segue.destinationViewController.
+        // Pass the selected object to the new view controller.
+    }
+    */
+
+}
