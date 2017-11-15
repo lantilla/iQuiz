@@ -19,6 +19,7 @@ class QuestionViewController: UIViewController {
     @IBOutlet weak var option3Btn: UIButton!
     @IBOutlet weak var option4Btn: UIButton!
     var formerBtn = UIButton()
+    var optionSelected = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -28,6 +29,10 @@ class QuestionViewController: UIViewController {
         option2Btn.setTitle(questions[currentQuestion]["option2"], for: .normal)
         option3Btn.setTitle(questions[currentQuestion]["option3"], for: .normal)
         option4Btn.setTitle(questions[currentQuestion]["option4"], for: .normal)
+        option1Btn.backgroundColor = .gray
+        option2Btn.backgroundColor = .gray
+        option3Btn.backgroundColor = .gray
+        option4Btn.backgroundColor = .gray
         //option1Label.layer.cornerRadius = 5
         //option1Label.clipsToBounds = true
         // Do any additional setup after loading the view.
@@ -49,7 +54,9 @@ class QuestionViewController: UIViewController {
     }
     
     @IBAction func submitBtnPressed(_ sender: Any) {
-        //self.performSegue(withIdentifier: "answerSegue", sender: self)
+        if optionSelected == true {
+            self.performSegue(withIdentifier: "answerSegue", sender: self)
+        }
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -70,10 +77,13 @@ class QuestionViewController: UIViewController {
         option2Btn.setTitle(questions[currentQuestion]["option2"], for: .normal)
         option3Btn.setTitle(questions[currentQuestion]["option3"], for: .normal)
         option4Btn.setTitle(questions[currentQuestion]["option4"], for: .normal)
+        formerBtn.backgroundColor = .gray
+        optionSelected = false
     }
     
     
     @IBAction func optionPressed(_ sender: UIButton) {
+        optionSelected = true
         chosenAns = sender.titleLabel!.text!
         formerBtn.backgroundColor = .gray
         sender.backgroundColor = UIColor(hue: 0.6472, saturation: 0.08, brightness: 0.15, alpha: 1.0)

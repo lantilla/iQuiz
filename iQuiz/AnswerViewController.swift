@@ -61,6 +61,7 @@ class AnswerViewController: UIViewController {
     
     @IBAction func nextBtnPressed(_ sender: Any) {
         currentQuestion += 1
+        NSLog(String(currentQuestion))
         if questions.count != currentQuestion {
             self.performSegue(withIdentifier: "nextQuestionSegue", sender: self)
         } else {

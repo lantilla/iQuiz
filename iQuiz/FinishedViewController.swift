@@ -24,7 +24,7 @@ class FinishedViewController: UIViewController {
         } else {
             descriptionLabel.text = descriptions[0]
         }
-        countLabel.text = "\(correctCount) out of \(total) questions correct!"
+        countLabel.text = "\(correctCount) out of \(total)"
         // Do any additional setup after loading the view.
     }
 
