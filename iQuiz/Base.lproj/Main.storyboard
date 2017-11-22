@@ -11,6 +11,21 @@
     </dependencies>
     <scenes>
         <!--View Controller-->
+        <scene sceneID="Pro-12-mJa">
+            <objects>
+                <viewController id="wAR-kC-uI0" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="qGP-YC-sHM">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <viewLayoutGuide key="safeArea" id="EdW-6f-MBz"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="ZFq-Ni-6Ly" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-921" y="124"/>
+        </scene>
+        <!--View Controller-->
         <scene sceneID="tne-QT-ifu">
             <objects>
                 <viewController storyboardIdentifier="home" id="BYZ-38-t0r" customClass="ViewController" customModule="iQuiz" customModuleProvider="target" sceneMemberID="viewController">
@@ -55,7 +70,10 @@
                                     <barButtonItem style="plain" systemItem="flexibleSpace" id="kCa-kZ-siD"/>
                                     <barButtonItem title="Settings" id="NIk-3T-IL9">
                                         <connections>
-                                            <action selector="settingsPressed:" destination="BYZ-38-t0r" id="DvG-hh-7lp"/>
+                                            <action selector="openSettings:" destination="BYZ-38-t0r" id="INl-98-ksb"/>
+                                            <segue destination="wAR-kC-uI0" kind="popoverPresentation" identifier="settingsSegue" popoverAnchorBarButtonItem="NIk-3T-IL9" id="byR-wk-isV">
+                                                <popoverArrowDirection key="popoverArrowDirection" up="YES" down="YES" left="YES" right="YES"/>
+                                            </segue>
                                         </connections>
                                     </barButtonItem>
                                 </items>
@@ -86,6 +104,18 @@
         <!--QuestionViewController-->
         <scene sceneID="gPP-Oo-Rz7">
             <objects>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="s6g-lZ-qZb" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <exit id="aGf-Zn-zCu" userLabel="Exit" sceneMemberID="exit"/>
+                <swipeGestureRecognizer cancelsTouchesInView="NO" direction="left" id="t5o-9c-8zc">
+                    <connections>
+                        <segue destination="aGf-Zn-zCu" kind="unwind" unwindAction="returnToMainWithSegue:" id="deb-qx-TqY"/>
+                    </connections>
+                </swipeGestureRecognizer>
+                <swipeGestureRecognizer cancelsTouchesInView="NO" direction="right" id="RSA-VQ-BB5">
+                    <connections>
+                        <action selector="rightSwipe:" destination="9Xb-f7-xTn" id="QEg-Hv-0fc"/>
+                    </connections>
+                </swipeGestureRecognizer>
                 <viewController title="QuestionViewController" id="9Xb-f7-xTn" customClass="QuestionViewController" customModule="iQuiz" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="qTr-WK-GLg">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
@@ -212,18 +242,6 @@
                         <segue destination="CIJ-1N-5w0" kind="show" identifier="answerSegue" id="NqI-VB-0ZG"/>
                     </connections>
                 </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="s6g-lZ-qZb" userLabel="First Responder" sceneMemberID="firstResponder"/>
-                <exit id="aGf-Zn-zCu" userLabel="Exit" sceneMemberID="exit"/>
-                <swipeGestureRecognizer cancelsTouchesInView="NO" direction="right" id="RSA-VQ-BB5">
-                    <connections>
-                        <action selector="rightSwipe:" destination="9Xb-f7-xTn" id="QEg-Hv-0fc"/>
-                    </connections>
-                </swipeGestureRecognizer>
-                <swipeGestureRecognizer cancelsTouchesInView="NO" direction="left" id="t5o-9c-8zc">
-                    <connections>
-                        <segue destination="aGf-Zn-zCu" kind="unwind" unwindAction="returnToMainWithSegue:" id="deb-qx-TqY"/>
-                    </connections>
-                </swipeGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="613.60000000000002" y="119.1904047976012"/>
         </scene>
@@ -244,7 +262,7 @@
                             <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="x2b-RP-sUb">
                                 <rect key="frame" x="0.0" y="20" width="375" height="44"/>
                                 <items>
-                                    <barButtonItem title="Back" id="0db-Pg-1l0">
+                                    <barButtonItem title="Done" id="0db-Pg-1l0">
                                         <connections>
                                             <action selector="goBack:" destination="CIJ-1N-5w0" id="8XS-dz-etm"/>
                                             <segue destination="4xH-Ni-pr3" kind="unwind" unwindAction="returnToMainWithSegue:" id="OCZ-Sf-Shv"/>

@@ -9,7 +9,7 @@
 import UIKit
 
 class AnswerViewController: UIViewController {
-    var questions: [Dictionary<String, String>] = [[:]]
+    var questions:Subject!
     var correctCount = Int()
     var chosenAns = String()
     var currentQuestion = Int()
@@ -20,10 +20,12 @@ class AnswerViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        questionLabel.text = questions[currentQuestion]["question"]
-        answerLabel.text = questions[currentQuestion]["answer"]
+        var ans = questions.questions[currentQuestion]["answers"] as! [String]
+        ans = NSMutableArray(array: ans) as! [String]
+        questionLabel.text = questions.questions[currentQuestion]["text"] as? String
+        answerLabel.text = ans[Int(questions.questions[currentQuestion]["answer"] as! String)! - 1]
         userAnswerLabel.text = chosenAns
-        if chosenAns == answerLabel.text {
+        if userAnswerLabel.text == answerLabel.text {
             userAnswerLabel.textColor = UIColor(hue: 0.3778, saturation: 1, brightness: 0.62, alpha: 1.0)
             correctCount += 1
         } else {
@@ -42,7 +44,7 @@ class AnswerViewController: UIViewController {
         if segue.identifier == "finishedSegue" {
             let destVC : FinishedViewController = segue.destination as! FinishedViewController
             destVC.correctCount = correctCount
-            destVC.total = questions.count
+            destVC.total = questions.questions.count
         } else if segue.identifier == "nextQuestionSegue" {
             let destVC : QuestionViewController = segue.destination as! QuestionViewController
             destVC.currentQuestion = currentQuestion
@@ -62,7 +64,7 @@ class AnswerViewController: UIViewController {
     @IBAction func nextBtnPressed(_ sender: Any) {
         currentQuestion += 1
         NSLog(String(currentQuestion))
-        if questions.count != currentQuestion {
+        if questions.questions.count != currentQuestion {
             self.performSegue(withIdentifier: "nextQuestionSegue", sender: self)
         } else {
             self.performSegue(withIdentifier: "finishedSegue", sender: self)

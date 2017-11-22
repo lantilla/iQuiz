@@ -9,10 +9,11 @@
 import UIKit
 
 class QuestionViewController: UIViewController {
-    var questions: [Dictionary<String, String>] = [[:]]
+    var questions:Subject!
     var correctCount = Int()
     var chosenAns = String()
     var currentQuestion = Int()
+    var ques: [String] = []
     @IBOutlet weak var questionLabel: UILabel!
     @IBOutlet weak var option1Btn: UIButton!
     @IBOutlet weak var option2Btn: UIButton!
@@ -23,12 +24,14 @@ class QuestionViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        NSLog(String(currentQuestion))
-        questionLabel.text = questions[currentQuestion]["question"]
-        option1Btn.setTitle(questions[currentQuestion]["option1"], for: .normal)
-        option2Btn.setTitle(questions[currentQuestion]["option2"], for: .normal)
-        option3Btn.setTitle(questions[currentQuestion]["option3"], for: .normal)
-        option4Btn.setTitle(questions[currentQuestion]["option4"], for: .normal)
+        NSLog(String(describing: questions.questions))
+        questionLabel.text = questions.questions[currentQuestion]["text"] as? String
+        ques = questions.questions[currentQuestion]["answers"] as! [String]
+        ques = NSMutableArray(array: ques) as! [String]
+        option1Btn.setTitle(ques[0], for: .normal)
+        option2Btn.setTitle(ques[1], for: .normal)
+        option3Btn.setTitle(ques[2], for: .normal)
+        option4Btn.setTitle(ques[3], for: .normal)
         option1Btn.backgroundColor = .gray
         option2Btn.backgroundColor = .gray
         option3Btn.backgroundColor = .gray
@@ -72,11 +75,13 @@ class QuestionViewController: UIViewController {
     @IBAction func returnToQuestion(segue: UIStoryboardSegue) {
         NSLog("back in the QuestionViewController")
         NSLog(String(currentQuestion))
-        questionLabel.text = questions[currentQuestion]["question"]
-        option1Btn.setTitle(questions[currentQuestion]["option1"], for: .normal)
-        option2Btn.setTitle(questions[currentQuestion]["option2"], for: .normal)
-        option3Btn.setTitle(questions[currentQuestion]["option3"], for: .normal)
-        option4Btn.setTitle(questions[currentQuestion]["option4"], for: .normal)
+        questionLabel.text = questions.questions[currentQuestion]["text"] as? String
+        ques = questions.questions[currentQuestion]["answers"] as! [String]
+        ques = NSMutableArray(array: ques) as! [String]
+        option1Btn.setTitle(ques[0], for: .normal)
+        option2Btn.setTitle(ques[1], for: .normal)
+        option3Btn.setTitle(ques[2], for: .normal)
+        option4Btn.setTitle(ques[3], for: .normal)
         formerBtn.backgroundColor = .gray
         optionSelected = false
     }

@@ -17,6 +17,7 @@
 		5A7283911FBA5C4F00B401D5 /* QuestionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A7283901FBA5C4F00B401D5 /* QuestionViewController.swift */; };
 		5A7283931FBA5C6800B401D5 /* AnswerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A7283921FBA5C6800B401D5 /* AnswerViewController.swift */; };
 		5A7283951FBAFDF100B401D5 /* FinishedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A7283941FBAFDF100B401D5 /* FinishedViewController.swift */; };
+		5A8015D21FC450B800A05288 /* Subject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A8015D11FC450B800A05288 /* Subject.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -53,6 +54,7 @@
 		5A7283901FBA5C4F00B401D5 /* QuestionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuestionViewController.swift; sourceTree = "<group>"; };
 		5A7283921FBA5C6800B401D5 /* AnswerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnswerViewController.swift; sourceTree = "<group>"; };
 		5A7283941FBAFDF100B401D5 /* FinishedViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FinishedViewController.swift; sourceTree = "<group>"; };
+		5A8015D11FC450B800A05288 /* Subject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Subject.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -112,6 +114,7 @@
 				5A7283901FBA5C4F00B401D5 /* QuestionViewController.swift */,
 				5A7283921FBA5C6800B401D5 /* AnswerViewController.swift */,
 				5A7283941FBAFDF100B401D5 /* FinishedViewController.swift */,
+				5A8015D11FC450B800A05288 /* Subject.swift */,
 			);
 			path = iQuiz;
 			sourceTree = "<group>";
@@ -272,6 +275,7 @@
 				5A6C9A601FB2ED9400634275 /* ViewController.swift in Sources */,
 				5A6C9A5E1FB2ED9400634275 /* AppDelegate.swift in Sources */,
 				5A7283911FBA5C4F00B401D5 /* QuestionViewController.swift in Sources */,
+				5A8015D21FC450B800A05288 /* Subject.swift in Sources */,
 				5A7283951FBAFDF100B401D5 /* FinishedViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

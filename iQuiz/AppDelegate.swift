@@ -13,12 +13,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
 
-    let subjects = ["Mathematics", "Marvel Super Heroes", "Science"]
-    let subjectsInfo = ["Mathematics": ["image": "calculator", "desc": "Get out that calculator!"], "Marvel Super Heroes": ["image": "marvel", "desc": "Join Earth's Mightiest Heroes!"], "Science": ["image": "science", "desc": "Test your scientific prowess!"]]
-    // questions for quizzes
-    var mathematics: [Dictionary<String, String>] = [["question": "What is the mean of the following numbers: 3, -7, 5, 13, -2?", "option1": "3.3", "option2": "2.4", "option3": "8", "option4": "-0.6", "answer": "2.4"], ["question": "Solve for x: 5x - 6 = 3x - 8", "option1": "-1", "option2": "0.5", "option3": "-2", "option4": "1", "answer": "-1"]]
-    var science: [Dictionary<String, String>] = [["question": "What is sodium chloride (NaCl)?", "option1": "Table Sugar", "option2": "Baking Soda", "option3": "Lead", "option4": "Table Salt", "answer": "Table Salt"]]
-    var marvel: [Dictionary<String, String>] = [["question": "Which infinity stone is the Tesseract?", "option1": "Space Stone", "option2": "Mind Stone", "option3": "Reality Stone", "option4": "Power Stone", "answer": "Space Stone"], ["question": "Which of these is NOT one of Marvel Comics former names?", "option1": "Atlas Comics", "option2": "National Comics Publications", "option3": "Timely Publications", "option4": "All of the Above", "answer": "National Comics Publications"], ["question": "The Silver Surfer is from the planet...", "option1": "Earth", "option2": "Gallifrey", "option3": "Zenn-La", "option4": "Morag", "answer": "Zenn-La"]]
 
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {

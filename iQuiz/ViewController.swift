@@ -9,13 +9,16 @@
 import UIKit
 
 class ViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
-    var questions: [Dictionary<String, String>] = [[:]]
+    var questions: Subject!
     var correct = 0
     var currentQuestion = 0
+    var subjects: [Subject] = []
+    var images = ["science", "marvel", "calculator"]
     @IBOutlet weak var tableView: UITableView!
-    
+    let url = URL(string: "http://tednewardsandbox.site44.com/questions.json")
+        
     public func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return (UIApplication.shared.delegate as! AppDelegate).subjects.count
+        return subjects.count
     }
     
     public func numberOfSections(in tableView: UITableView) -> Int {
@@ -28,13 +31,16 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
             cell = UITableViewCell(style: .subtitle, reuseIdentifier: "reuseIdentifier")
         }
         // adding subject title to cell
-        let subject = (UIApplication.shared.delegate as! AppDelegate).subjects[indexPath.row]
+        let subject = subjects[indexPath.row].title
         cell?.textLabel?.text = subject
         // adding image icon to cell
-        let img = (UIApplication.shared.delegate as! AppDelegate).subjectsInfo[subject]!["image"]
-        cell?.imageView?.image = UIImage(named: img!)
+        var img = "default"
+        if indexPath.row < images.count {
+            img = images[indexPath.row]
+        }
+        cell?.imageView?.image = UIImage(named: img)
         // adding description as subtitle to cell
-        let desc = (UIApplication.shared.delegate as! AppDelegate).subjectsInfo[subject]!["desc"]
+        let desc = subjects[indexPath.row].description
         cell?.detailTextLabel?.text = desc
         //cell?.detailTextLabel?.numberOfLines = 0; // meant to wrap description text
         NSLog(subject)
@@ -42,23 +48,37 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let subject = (UIApplication.shared.delegate as! AppDelegate).subjects[indexPath.row]
-        NSLog("You selected cell number: \(subject)!")
-        if subject == "Mathematics" {
-            questions = (UIApplication.shared.delegate as! AppDelegate).mathematics
-        } else if subject == "Science" {
-            questions = (UIApplication.shared.delegate as! AppDelegate).science
-        } else {
-            questions = (UIApplication.shared.delegate as! AppDelegate).marvel
-        }
+        let subject = subjects[indexPath.row]
+        questions = subject
         self.performSegue(withIdentifier: "questionSegue", sender: self)
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        let destVC : QuestionViewController = segue.destination as! QuestionViewController
-        destVC.correctCount = correct
-        destVC.questions = questions
+        if segue.identifier != "settingsSegue" {
+            let destVC : QuestionViewController = segue.destination as! QuestionViewController
+            destVC.correctCount = correct
+            destVC.questions = questions
+        }
+        if segue.identifier == "settingsSegue" {
+            let vc = ViewController()
+            vc.modalPresentationStyle = .popover
+            //change properties of the view controller
+            //vc.text = "Settings"
+            //present from a view and rect
+            present(vc, animated: true, completion: nil)
+            vc.popoverPresentationController?.sourceView = view
+        }
     }
+    func adaptivePresentationStyle(for controller: UIPresentationController, traitCollection: UITraitCollection) -> UIModalPresentationStyle {
+        return .none
+    }
+    /*@IBAction func openSettings(_ sender: Any) {
+        let vc = SettingsViewController()
+        //present from a view and rect
+        vc.modalPresentationStyle = .popover //presentation style
+        present(vc, animated: true, completion: nil)
+        vc.popoverPresentationController?.sourceView = view
+    }*/
     
     @IBAction func returnToMain(segue: UIStoryboardSegue) {
         NSLog("back in the ViewController")
@@ -69,22 +89,41 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         // Do any additional setup after loading the view, typically from a nib.
         tableView.dataSource = self
         tableView.delegate = self
+        downloadJSON()
         self.tableView.register(UITableViewCell.self, forCellReuseIdentifier: "subjectCell")
     }
+    
+    public func downloadJSON() {
+        URLSession.shared.dataTask(with:url!, completionHandler: {(data, response, error) in
+            guard let data = data, error == nil else { return }
+            
+            do {
+                let jsonInitial = try JSONSerialization.jsonObject(with: data, options: .allowFragments)
+                print(jsonInitial)
+                let json = jsonInitial as! [[String:Any]]
+                
+                
+                //print(json)
+                
+                for subject in json {
+                    var ques = subject["questions"] as! [[String : Any]]
+                    ques = NSMutableArray(array: ques) as! [[String : Any]]
+                    let cat = Subject(title: subject["title"]! as! String, description: subject["desc"]! as! String, questions: ques)
+                    self.subjects.append(cat)
+                }
+            } catch let error as NSError {
+                print(error)
+            }
+            
+        }).resume()
+    }
+    
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
 
-    
-    @IBAction func settingsPressed(_ sender: Any) {
-        let alert = UIAlertController(title: "Settings", message: "Settings go here", preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "OK", style: .default) { _ in
-            alert.dismiss(animated: true)
-        })
-        self.present(alert, animated: true)
-    }
-    
+
 }
 
